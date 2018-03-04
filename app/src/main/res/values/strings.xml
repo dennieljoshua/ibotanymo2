@@ -1,5 +1,92 @@
 <resources>
     <string name="app_name">Ibotany Mo</string>
     <string name="title_activity_main">Ibotany Mo</string>
+    <string name="title_activity_botany_guide">Botany Guide</string>
+    <string name="tab_text_1">GENERAL</string>
+    <string name="tab_text_2">SHRUBS</string>
+    <string name="tab_text_3">VINES</string>
+    <string name="tab_text_4">BULBS</string>
+    <string name="tab_text_5">TREES</string>
+
+    <string name="action_settings">None</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+
+    <string name="general_basics">
+"<br/><br/>• First off, you’ve got to start with healthy plants. Select insect-, disease- and weed-free plants.
+<br/><br/>• Test soil for good pH levels and nutrients to support plant growth. There are specific soil mixes for specific types of plants.
+<br/><br/>• Watering:
+<br/>   - Newly planted plants generally need sufficient water supply
+<br/>   - On dry environments, watering is naturally encouraged.
+<br/>   - Once plants are established, natural rains should provide enough water for most plants.
+<br/>   - Watering deeply once a week is much better for plants than short, frequent waterings.
+<br/>    - A general rule of thumb is an an inch of water (5 gallons per square yard) once a week on established plants.
+<br/><br/>• Plants need nutrients, some of these include
+<br/>    - Nitrogen
+<br/>    - Phosphorus
+<br/>    - Potassium
+<br/>    These nutrients are available in healthy soil or can be added through fertilizers or lime.
+<br/><br/>• Whether you’ve got clay or sandy soil, adding organic matter like compost will improve it. If you add organic matter to a sandy soil, it’ll enhance its water-holding capability. If you add it to clay soil, the organic matter will increase the soil’s drainage.
+<br/><br/>• Pesticides:
+<br/>    - Use them at the right time and place.
+<br/>    - Check the label for the type of plant and the pest it is made to control
+<br/>    - Strictly follow instructions on the product label to avoid misuse
+<br/><br/>• When plant problems arise, do not panic and over-water or over-fertilize. Always properly identify the problem before lashing out with uncertain solutions."
+    </string>
+
+    <string name="gardening_terms">"
+<b>Clay Soil</b> - Soil composed of many tiny plate-like soil particles that can compact with time to form a hard, solid mass that makes shoveling difficult, digging holes more laborious, and often results in poor drainage
+<br/><br/><b>Sandy Soil</b> - Sandy soil is composed of many irregular to rounded tiny grains of sand, as opposed to the many tiny plate-like soil particles that make up a clay soil. Sandy soil drains very quickly and doesn\'t hold on to fertilizer well.
+<br/><br/><b>Water Plant</b> - Plants that can grow on pond edges or in ponds or streams.
+<br/><br/><b>Topsoil</b> the upper layer of soil that you plant in.  It varies in depth from place to place, but will almost always be less than a foot deep and can be as little as 2 inches deep
+<br/><br/><b>Toxicity</b> - When a plant does not react well to something it is often called Toxicity.  Toxicity could refer to too much fertilizer, too much sun, sensitivity to insecticides etc.
+<br/><br/><b>Supplemental Water</b> - Water added through irrigation using drip irrigation, soaker hoses, or other non-natural means.
+<br/><br/><b>Prune</b> - Using pruning shears, scissors, a knife, or loppers to shape or rejuvenate a plant, not to increase branching.  Generally pruning is much more drastic than pinching.  Pruning is most commonly used on shrubs, trees, and perennials.
+<br/><br/><b>pH</b> - A measure of how acidic or basic your soil is.  A pH of 7 is considered neutral.  Acidic soils have a pH less than 7.  Basic soils have a pH greater than 7.  Most plants prefer a pH between 6 and 7.  Some plants, called acid loving (azalea, camellia, citrus), will take a pH between 5 and 7.  pH is Important because plants don't like soils that are too acidic or basic.  pH can be adjusted using amendments.
+<br/><br/><b>Mulch</b> -  is any material that is spread or laid over the surface of the soil as a covering. It is used to retain moisture in the soil, suppress weeds, keep the soil cool, and make the garden bed look more attractive.
+"</string>
+
+<string name="shrub_tips">
+"•  Shape your shrubs, they grow rapidly an become excessively twiggy.
+<br/>•  Provide atleast 2 layers of mulch on newly planted shrubs.
+<br/>•  Always try to renovate olden/neglected shrubs.
+<br/>•  Check the soil to judge soil moisture
+<br/>•  Avoid frequent light watering. Water deeply on weekly intervals instead.
+<br/>•  Water the roots not the leaves.
+<br/>•  Newly planted shrubs need constant checking
+"</string>
+
+<string name="vine_tips">
+"•  Vines need deep watering during dry spells.
+<br/>•  Annual vines need fertilizing at planting time and again a little later in the season to keep them actively growing.
+<br/>•  Mulch have many benefits for vines, including keeping soil cool and moist in summer, helping prevent rapid temperature changes during the day
+<br/>•  Water at time of planting.
+<br/>•  Space vines 6 to 10 feet apart
+<br/>•  Select a site with full sun.
+<br/>•  Be wary of weeds specially on newly established vines
+<br/>•  Fertilizers are usually necessary for the first year
+"</string>
+
+<string name="bulb_tips">
+"•  Bulbs need specific nutrients and minerals during specific growth stages to achieve optimal produce
+<br/>•  Water bulbs after planting
+<br/>•  Remove foliage
+<br/>•  Provide support for the stems.
+<br/>•  Cover the flowerbed with layer of mulch
+<br/>•  Check the seasonal preference of bulb plants before planting
+"</string>
+
+<string name="tree_tips">
+"•  Check if the tree species will grow on your area conditions
+<br/>•  Sun exposure greatly affects how th tree will grow
+<br/>•  Add mulch around the tree but avoid the trunk
+<br/>•  Water the tree immediately after planting and regularly on its first two years
+<br/>•  Check if your tree species is drought or water tolerant to avoid over/under watering
+<br/>•  Annual Pruning will give you a more beautiful and maintainable tree.
+<br/>•  Keep the base of the tree free of other living plants such as weeds or grass.
+<br/>•  Protect young trees from chemicals.
+<br/>•  Prune young trees with care.
+"</string>
+
 
 </resources>

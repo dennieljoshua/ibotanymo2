@@ -30,8 +30,17 @@
         <activity android:name=".PlantList" />
         <activity
             android:name=".HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ProblemSolver"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ProblemSolver" />
+        <activity
+            android:name=".BotanyGuide"
+            android:label="@string/title_activity_botany_guide"
+            android:parentActivityName=".HomeScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bcklup.ibotanymo.HomeScreen" />
+        </activity>
     </application>
 
 </manifest>

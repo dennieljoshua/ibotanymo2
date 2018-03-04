@@ -22,7 +22,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void showGuide(View view){
-        Intent intent = new Intent(this, ProblemSolver.class);
+        Intent intent = new Intent(this, BotanyGuide.class);
         startActivity(intent);
     }
 }
