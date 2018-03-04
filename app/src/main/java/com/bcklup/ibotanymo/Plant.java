@@ -11,14 +11,16 @@ public class Plant {
     private int storeType;
     private byte[] image;
     private String guide;
+    private int kind;
 
-    public Plant(int id, String name, int type, int storeType, byte[] image, String guide) {
+    public Plant(int id, String name, int type, int storeType, byte[] image, String guide, int kind) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.storeType = storeType;
         this.image = image;
         this.guide = guide;
+        this.kind = kind;
     }
 
     public int getId() {
@@ -67,5 +69,13 @@ public class Plant {
 
     public void setGuide(String guide) {
         this.guide = guide;
+    }
+
+    public int getKind() {
+        return kind;
+    }
+
+    public void setKind(int kind) {
+        this.kind= kind;
     }
 }

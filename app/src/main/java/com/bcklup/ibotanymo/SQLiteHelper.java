@@ -41,9 +41,9 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         SQLiteDatabase database = getWritableDatabase();
         database.execSQL(sql);
     }
-    public void insertPlant(String plantName, Integer plantType, Integer storeType, byte[] plantImage, String plantGuide){
+    public void insertPlant(String plantName, Integer plantType, Integer storeType, byte[] plantImage, String plantGuide, Integer plantKind){
             SQLiteDatabase database = getWritableDatabase();
-            String sql = "INSERT INTO plants VALUES (NULL, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO plants VALUES (NULL, ?, ?, ?, ?, ?,?)";
             SQLiteStatement statement = database.compileStatement(sql);
             statement.clearBindings();
 
@@ -52,8 +52,10 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             statement.bindLong(3, storeType);
             statement.bindBlob(4, plantImage);
             statement.bindString(5, plantGuide);
+            statement.bindLong(6, plantKind);
 
-            statement.executeInsert();
+
+        statement.executeInsert();
     }
     public void insertPlanner(Long plantid){
         SQLiteDatabase database = getWritableDatabase();

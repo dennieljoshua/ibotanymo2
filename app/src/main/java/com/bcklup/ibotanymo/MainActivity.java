@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PLANT_STORETYPE="com.bcklup.ibotanymo.PLANT_STORETYPE";
     public static final String PLANT_GUIDE="com.bcklup.ibotanymo.PLANT_GUIDE";
     public static final String PLANT_IMAGE="com.bcklup.ibotanymo.PLANT_IMAGE";
+    public static final String PLANT_KIND="com.bcklup.ibotanymo.PLANT_KIND";
 
 
     public static SQLiteHelper sqLiteHelper;
@@ -74,15 +75,15 @@ public class MainActivity extends AppCompatActivity {
             int storeType = cursor.getInt(3);
             byte[] image = cursor.getBlob(4);
             String guide = cursor.getString(5);
+            int kind = cursor.getInt(6);
 
-            list.add(new Plant(id, name, type, storeType, image, guide));
+            list.add(new Plant(id, name, type, storeType, image, guide,kind));
         }
         adapter.notifyDataSetChanged();
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showDialogDelete((long)list.get(position).getId());
-
                 return true;
             }
         });
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(PLANT_STORETYPE,list.get(position).getStoreType());
                 intent.putExtra(PLANT_IMAGE,list.get(position).getImage());
                 intent.putExtra(PLANT_GUIDE,list.get(position).getGuide());
+                intent.putExtra(PLANT_KIND,list.get(position).getKind());
 
                 startActivity(intent);
 

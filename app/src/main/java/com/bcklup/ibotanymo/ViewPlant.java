@@ -6,9 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,6 +38,8 @@ public class ViewPlant extends AppCompatActivity {
         TextView plantStoreType = findViewById(R.id.plantStoreType);
         TextView plantGuide = findViewById(R.id.plantGuide);
         ImageView plantImage= findViewById(R.id.plantImage);
+        ImageView growthMap = findViewById(R.id.growthMap);
+        TextView plantKind = findViewById(R.id.plantKind);
 
         plantName.setText(intent.getExtras().getString(MainActivity.PLANT_NAME));
         plantnamey = intent.getExtras().getString(MainActivity.PLANT_NAME);
@@ -57,6 +62,26 @@ public class ViewPlant extends AppCompatActivity {
         Bitmap bmp = BitmapFactory.decodeByteArray(plantImg,0,plantImg.length);
         mybmp = bmp;
         plantImage.setImageBitmap(bmp);
+        switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
+            case 1: growthMap.setImageResource(R.drawable.shrubgrowthmap);
+                break;
+            case 2: growthMap.setImageResource(R.drawable.vinegrowthmap);
+                break;
+            case 3: growthMap.setImageResource(R.drawable.vinegrowthmap);
+                break;
+            case 4: growthMap.setImageResource(R.drawable.treegrowthmap);
+                break;
+        }
+        switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
+            case 1: plantKind.setText("Shrub");
+                break;
+            case 2: plantKind.setText("Vine");
+                break;
+            case 3: plantKind.setText("Bulb");
+                break;
+            case 4: plantKind.setText("Tree");
+                break;
+        }
     }
     public void showImageFull(View view){
         showImageFullDialog(ViewPlant.this);

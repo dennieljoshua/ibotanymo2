@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class AddPlant extends AppCompatActivity {
-    EditText edtName, edtType, edtStore, edtGuide;
+    EditText edtName, edtType, edtStore, edtGuide, edtKind;
     Button btnSave, btnChoose;
     ImageView plantimage;
     final int REQUEST_CODE_GALLERY = 999;
@@ -44,7 +44,7 @@ public class AddPlant extends AppCompatActivity {
         btnSave = (Button)findViewById(R.id.btnSave);
         btnChoose = (Button)findViewById(R.id.chooseImage);
         plantimage = (ImageView) findViewById(R.id.addImage);
-
+        edtKind = (EditText) findViewById(R.id.numKind);
 
         final SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
         try {
@@ -73,7 +73,8 @@ public class AddPlant extends AppCompatActivity {
                             Integer.parseInt(edtType.getText().toString()),
                             Integer.parseInt(edtStore.getText().toString()),
                             imageViewToByte(plantimage),
-                            edtGuide.getText().toString().trim()
+                            edtGuide.getText().toString().trim(),
+                            Integer.parseInt(edtKind.getText().toString())
                     );
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
