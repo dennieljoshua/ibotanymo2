@@ -1,0 +1,330 @@
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Common Plant Problems"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.22000003" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Find a cure for your problems"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/findSolutionX"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="showSolutionDialog"
+            android:text="FIND SOLUTION"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/blight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Plants show signs of blights on leaves and/or branches."
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/youngwilt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Young seedlings wilt and die"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/maturewilt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Slightly matured plant wilting"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/weakplant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Plants weak and spindly"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/stuntedyellow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Growth stunted with yellowing leaves"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/yellowwilt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Yellow leaves but do not wilt"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/brownspots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Brown spots on leaves"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/burntedges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Burnt looking edges (Chemical Burn)"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/burntfall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Burnt looking leaves falling off"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/curled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Leaves curled or scrunched together"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/powderywhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Powdery white coating on top of leaves"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/whitespots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Leaves have tiny white spots"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/parasites1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Visible signs of snails or slugs"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/parasites2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Parasites are visible"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/parasites3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Scaly looking insects on leaves"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+
+            <CheckBox
+                android:id="@+id/parasites4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="setSolutionParams"
+                android:text="Signs of Fungal Parasites"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="59dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.widget.LinearLayout>

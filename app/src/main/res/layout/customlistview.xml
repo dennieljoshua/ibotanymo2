@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/plantImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="13dp"
+        app:srcCompat="@drawable/ibotanymologsmall" />
+
+    <TextView
+        android:id="@+id/plantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/plantImage"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/plantImage"
+        android:text="Plant Name Goes Here"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/plantType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/plantName"
+        android:layout_below="@+id/plantName"
+        android:layout_marginTop="12dp"
+        android:text="Plant Type"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/plantStoreType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/plantImage"
+        android:layout_alignStart="@+id/plantName"
+        android:layout_marginBottom="18dp"
+        android:text="Plant Store"
+        android:textSize="15sp" />
+</RelativeLayout>
