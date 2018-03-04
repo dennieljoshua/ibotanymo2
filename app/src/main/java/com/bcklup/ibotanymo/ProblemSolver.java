@@ -2,6 +2,7 @@ package com.bcklup.ibotanymo;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
@@ -21,15 +22,6 @@ import java.util.Map;
 
 public class ProblemSolver extends AppCompatActivity {
 
-    public static SQLiteHelper sqLiteHelper;
-
-    String solutionString = "";
-
-    LinearLayout listCheckBox;
-    CheckBox checkbox;
-
-    ArrayList<Problem> list;
-    HashMap<Integer, Boolean> sols;
 
     class Problem{
         public int id;
@@ -41,36 +33,48 @@ public class ProblemSolver extends AppCompatActivity {
             this.solution = solution;
         }
     }
+    SQLiteHelper dbhelper;
+
+    String solutionString = "";
+
+    LinearLayout listCheckBox;
+    CheckBox checkbox;
+
+    ArrayList<Problem> list;
+    HashMap<Integer, Boolean> sols;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_solver);
-        final SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
+        dbhelper = new SQLiteHelper(this);
+
         try {
-            sqLiteHelper.createDataBase();
+            dbhelper.createDataBase();
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
         try {
-            sqLiteHelper.openDataBase();
+            dbhelper.openDataBase();
         }catch(SQLException sqle){
             throw sqle;
         }
+        list= new ArrayList<>();
+        sols= new HashMap<>();
         listCheckBox = (LinearLayout) findViewById(R.id.listCheckbox);
         initProbs();
-        initSols();
 
+        initSols();
         initChecklist();
     }
     private void initSols(){
         sols.clear();
-        Cursor cursor = sqLiteHelper.getData("SELECT _id FROM solution");
+        Cursor cursor = dbhelper.getData("SELECT _id FROM solutions");
         while(cursor.moveToNext()){
             sols.put(cursor.getInt(0),false);
         }
     }
     private void initProbs(){
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM problems");
+        Cursor cursor = dbhelper.getData("SELECT * FROM problems");
         list.clear();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
@@ -105,10 +109,10 @@ public class ProblemSolver extends AppCompatActivity {
 //            if(sol.forEach();)
 //        }
         solutionString ="";
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM solutions");
+        Cursor cursor = dbhelper.getData("SELECT * FROM solutions");
         while(cursor.moveToNext()){
             if(sols.get(cursor.getInt(0))){
-                solutionString += cursor.getString(1)+"\n";
+                solutionString += "• "+cursor.getString(1)+"\n";
             }
         }
 
@@ -130,5 +134,9 @@ public class ProblemSolver extends AppCompatActivity {
         });
         dialog.getWindow().setLayout(width, height);
         dialog.show();
+    }
+    public void showAddProblem(View view){
+        Intent intent = new Intent(this,AddProblem.class);
+        startActivity(intent);
     }
 }
