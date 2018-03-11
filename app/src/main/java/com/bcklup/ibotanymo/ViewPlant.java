@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,10 +61,14 @@ public class ViewPlant extends AppCompatActivity {
                 break;
         }
         plantGuide.setText(intent.getExtras().getString(MainActivity.PLANT_GUIDE));
-        byte[] plantImg = intent.getExtras().getByteArray(MainActivity.PLANT_IMAGE);
-        Bitmap bmp = BitmapFactory.decodeByteArray(plantImg,0,plantImg.length);
-        mybmp = bmp;
-        plantImage.setImageBitmap(bmp);
+        InputStream ims = null;
+        try {
+            ims = getAssets().open("imgs/"+intent.getExtras().getInt(MainActivity.PLANT_ID)+".png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Drawable d = Drawable.createFromStream(ims, null);
+        plantImage.setImageDrawable(d);
         switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
             case 1: growthMap.setImageResource(R.drawable.shrubgrowthmap);
                 break;

@@ -3,6 +3,7 @@ package com.bcklup.ibotanymo;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -135,9 +138,14 @@ public class PlantListAdapter extends BaseAdapter implements Filterable{
             case 3: holder.txtStoreType.setText("Hanging");
                 break;
         }
-        byte[] plantImage = plant.getImage();
-        Bitmap bmp = BitmapFactory.decodeByteArray(plantImage, 0, plantImage.length);
-        holder.imageView.setImageBitmap(bmp);
+        InputStream ims = null;
+        try {
+            ims = context.getAssets().open("imgs/"+plant.getId()+".png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Drawable d = Drawable.createFromStream(ims, null);
+        holder.imageView.setImageDrawable(d);
 
         return row;
     }

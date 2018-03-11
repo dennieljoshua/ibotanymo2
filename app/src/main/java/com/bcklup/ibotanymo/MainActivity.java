@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
     PlannerListAdapter adapter = null;
 
     private static final String TAG = "MyActivity";
+    public static final String PLANT_ID="com.bcklup.ibotanymo.PLANT_ID";
     public static final String PLANT_NAME="com.bcklup.ibotanymo.PLANT_NAME";
     public static final String PLANT_TYPE="com.bcklup.ibotanymo.PLANT_TYPE";
     public static final String PLANT_STORETYPE="com.bcklup.ibotanymo.PLANT_STORETYPE";
     public static final String PLANT_GUIDE="com.bcklup.ibotanymo.PLANT_GUIDE";
-    public static final String PLANT_IMAGE="com.bcklup.ibotanymo.PLANT_IMAGE";
     public static final String PLANT_KIND="com.bcklup.ibotanymo.PLANT_KIND";
 
 
@@ -73,11 +75,10 @@ public class MainActivity extends AppCompatActivity {
             String name = cursor.getString(1);
             int type = cursor.getInt(2);
             int storeType = cursor.getInt(3);
-            byte[] image = cursor.getBlob(4);
-            String guide = cursor.getString(5);
-            int kind = cursor.getInt(6);
+            String guide = cursor.getString(4);
+            int kind = cursor.getInt(5);
 
-            list.add(new Plant(id, name, type, storeType, image, guide,kind));
+            list.add(new Plant(id, name, type, storeType, guide,kind));
         }
         adapter.notifyDataSetChanged();
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -91,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, ViewPlant.class);
+                intent.putExtra(PLANT_ID,list.get(position).getId());
                 intent.putExtra(PLANT_NAME,list.get(position).getName());
                 intent.putExtra(PLANT_TYPE,list.get(position).getType());
                 intent.putExtra(PLANT_STORETYPE,list.get(position).getStoreType());
-                intent.putExtra(PLANT_IMAGE,list.get(position).getImage());
                 intent.putExtra(PLANT_GUIDE,list.get(position).getGuide());
                 intent.putExtra(PLANT_KIND,list.get(position).getKind());
 

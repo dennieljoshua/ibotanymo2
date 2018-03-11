@@ -60,10 +60,9 @@ public class PlantList extends AppCompatActivity{
             String name = cursor.getString(1);
             int type = cursor.getInt(2);
             int storeType = cursor.getInt(3);
-            byte[] image = cursor.getBlob(4);
-            String guide = cursor.getString(5);
-            int kind = cursor.getInt(6);
-            list.add(new Plant(id, name, type, storeType, image, guide,kind));
+            String guide = cursor.getString(4);
+            int kind = cursor.getInt(5);
+            list.add(new Plant(id, name, type, storeType, guide,kind));
         }
         adapter.notifyDataSetChanged();
 
@@ -109,7 +108,7 @@ public class PlantList extends AppCompatActivity{
             byte[] image = cursor.getBlob(4);
             String guide = cursor.getString(5);
             int kind = cursor.getInt(6);
-            list.add(new Plant(id, name, type, storeType, image, guide, kind));
+            list.add(new Plant(id, name, type, storeType, guide, kind));
         }
         adapter.notifyDataSetChanged();
     }

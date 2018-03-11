@@ -72,7 +72,6 @@ public class AddPlant extends AppCompatActivity {
                             edtName.getText().toString().trim(),
                             Integer.parseInt(edtType.getText().toString()),
                             Integer.parseInt(edtStore.getText().toString()),
-                            imageViewToByte(plantimage),
                             edtGuide.getText().toString().trim(),
                             Integer.parseInt(edtKind.getText().toString())
                     );

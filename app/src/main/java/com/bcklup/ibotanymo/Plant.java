@@ -9,16 +9,14 @@ public class Plant {
     private String name;
     private int type;
     private int storeType;
-    private byte[] image;
     private String guide;
     private int kind;
 
-    public Plant(int id, String name, int type, int storeType, byte[] image, String guide, int kind) {
+    public Plant(int id, String name, int type, int storeType,String guide, int kind) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.storeType = storeType;
-        this.image = image;
         this.guide = guide;
         this.kind = kind;
     }
@@ -53,14 +51,6 @@ public class Plant {
 
     public void setStoreType(int storeType) {
         this.storeType = storeType;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public String getGuide() {
