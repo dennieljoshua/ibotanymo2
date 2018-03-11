@@ -70,7 +70,7 @@ public class PlantList extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             sqLiteHelper.insertPlanner((long)list.get(position).getId());
-            Intent intent = new Intent(PlantList.this,MainActivity.class);
+            Intent intent = new Intent(PlantList.this,HomeScreen.class);
             startActivity(intent);
             finish();
             }

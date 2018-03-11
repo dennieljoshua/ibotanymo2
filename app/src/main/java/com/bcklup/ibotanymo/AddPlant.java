@@ -75,7 +75,7 @@ public class AddPlant extends AppCompatActivity {
                             edtGuide.getText().toString().trim(),
                             Integer.parseInt(edtKind.getText().toString())
                     );
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                     startActivity(intent);
                     finish();
                     Toast.makeText(getApplicationContext(), "Added Successfully!",Toast.LENGTH_SHORT).show();

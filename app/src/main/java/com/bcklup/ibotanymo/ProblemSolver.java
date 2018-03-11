@@ -26,8 +26,8 @@ public class ProblemSolver extends AppCompatActivity {
     class Problem{
         public int id;
         public String problem;
-        public int solution;
-        public Problem(int id, String problem, int solution){
+        public ArrayList<Integer> solution;
+        public Problem(int id, String problem, ArrayList<Integer> solution){
             this.id = id;
             this.problem = problem;
             this.solution = solution;
@@ -79,8 +79,12 @@ public class ProblemSolver extends AppCompatActivity {
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
             String problem = cursor.getString(1);
-            int solution = cursor.getInt(2);
-            list.add(new Problem(id,problem,solution));
+            Cursor cursor2 = dbhelper.getData("SELECT solution_id FROM problems_solutions WHERE problem_id ="+id);
+            ArrayList<Integer> sols = new ArrayList<>();
+            while(cursor2.moveToNext()){
+                sols.add(cursor2.getInt(0));
+            }
+            list.add(new Problem(id,problem,sols));
         }
     }
     private void initChecklist(){
@@ -96,7 +100,9 @@ public class ProblemSolver extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sols.put(list.get(button.getId()).solution,button.isChecked());
+                for(Integer xad: list.get(button.getId()).solution){
+                    sols.put(xad,button.isChecked());
+                }
             }
         };
     }

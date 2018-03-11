@@ -77,16 +77,43 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
         long solid = statement.executeInsert();
 
-        sql = "INSERT INTO problems VALUES (NULL, ?, ?)";
+        sql = "INSERT INTO problems VALUES (NULL, ?)";
         statement = database.compileStatement(sql);
         statement.clearBindings();
 
         statement.bindString(1, problem);
+
+        long probid = statement.executeInsert();
+
+        sql = "INSERT INTO problems_solutions VALUES (NULL, ?, ?)";
+        statement = database.compileStatement(sql);
+        statement.clearBindings();
+
+        statement.bindLong(1, probid);
         statement.bindLong(2, solid);
 
         statement.executeInsert();
-    }
 
+    }
+    public void insertProblemExisting(String problem, int solution){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO problems VALUES (NULL, ?)";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+
+        statement.bindString(1, problem);
+
+        long probid = statement.executeInsert();
+
+        sql = "INSERT INTO problems_solutions VALUES (NULL, ?, ?)";
+        statement = database.compileStatement(sql);
+        statement.clearBindings();
+
+        statement.bindLong(1, probid);
+        statement.bindLong(2, solution);
+
+        statement.executeInsert();
+    }
     public final void deletePlanner(Long plantid){
         SQLiteDatabase db = getWritableDatabase();
         String sql = "DELETE FROM planner WHERE plant_id=?";
