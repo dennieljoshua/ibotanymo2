@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by gians on 11/02/2018.
+ * Created by  gians on 11/02/2018.
  */
 
 
@@ -105,9 +105,8 @@ public class PlantList extends AppCompatActivity{
             String name = cursor.getString(1);
             int type = cursor.getInt(2);
             int storeType = cursor.getInt(3);
-            byte[] image = cursor.getBlob(4);
-            String guide = cursor.getString(5);
-            int kind = cursor.getInt(6);
+            String guide = cursor.getString(4);
+            int kind = cursor.getInt(5);
             list.add(new Plant(id, name, type, storeType, guide, kind));
         }
         adapter.notifyDataSetChanged();
