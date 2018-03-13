@@ -7,12 +7,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -36,7 +40,7 @@ public class ProblemSolver extends AppCompatActivity {
     SQLiteHelper dbhelper;
 
     String solutionString = "";
-
+    String filterText="1";
     LinearLayout listCheckBox;
     CheckBox checkbox;
 
@@ -66,6 +70,38 @@ public class ProblemSolver extends AppCompatActivity {
         initSols();
         initChecklist();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem item = menu.findItem(R.id.search_problem);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(!newText.isEmpty()){
+                    filterText = "1 AND problem LIKE \"%"+newText+"%\"";
+                    resetCheckbox();
+                    return false;
+                }
+                else{
+                    filterText="1";
+                    resetCheckbox();
+                    return false;
+                }
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
     private void initSols(){
         sols.clear();
         Cursor cursor = dbhelper.getData("SELECT _id FROM solutions");
@@ -73,8 +109,15 @@ public class ProblemSolver extends AppCompatActivity {
             sols.put(cursor.getInt(0),false);
         }
     }
+
+    void resetCheckbox(){
+        initProbs();
+        initSols();
+        listCheckBox.removeAllViews();
+        initChecklist();
+    }
     private void initProbs(){
-        Cursor cursor = dbhelper.getData("SELECT * FROM problems");
+        Cursor cursor = dbhelper.getData("SELECT * FROM problems WHERE "+filterText);
         list.clear();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
