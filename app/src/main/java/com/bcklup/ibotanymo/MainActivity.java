@@ -31,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
     //INITIATE
     GridView gridView;
     ArrayList<Plant> list;
+    ArrayList<Integer> planners;
     PlannerListAdapter adapter = null;
 
     private static final String TAG = "MyActivity";
     public static final String PLANT_ID="com.bcklup.ibotanymo.PLANT_ID";
+    public static final String PLANNER_ID="com.bcklup.ibotanymo.PLANNER_ID";
     public static final String PLANT_NAME="com.bcklup.ibotanymo.PLANT_NAME";
     public static final String PLANT_TYPE="com.bcklup.ibotanymo.PLANT_TYPE";
     public static final String PLANT_STORETYPE="com.bcklup.ibotanymo.PLANT_STORETYPE";
@@ -65,26 +67,30 @@ public class MainActivity extends AppCompatActivity {
         //POPULATE CRIDVIEW
         gridView = (GridView) findViewById(R.id.gridView);
         list = new ArrayList<>();
+        planners = new ArrayList<>();
         adapter = new PlannerListAdapter(this, R.layout.planner_items,list);
         gridView.setAdapter(adapter);
 
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM plants JOIN planner ON plants._id=planner.plant_id WHERE 1");
+        Cursor cursor = sqLiteHelper.getData("SELECT b._id, a.* FROM plants as A JOIN planner as B ON a._id=b.plant_id WHERE 1");
         list.clear();
+        planners.clear();
         while(cursor.moveToNext()){
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            int type = cursor.getInt(2);
-            int storeType = cursor.getInt(3);
-            String guide = cursor.getString(4);
-            int kind = cursor.getInt(5);
-
+            int planner_id = cursor.getInt(0);
+            int id = cursor.getInt(1);
+            String name = cursor.getString(2);
+            int type = cursor.getInt(3);
+            int storeType = cursor.getInt(4);
+            String guide = cursor.getString(5);
+            int kind = cursor.getInt(6);
+            planners.add(planner_id);
             list.add(new Plant(id, name, type, storeType, guide,kind));
+
         }
         adapter.notifyDataSetChanged();
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showDialogDelete((long)list.get(position).getId());
+                showDialogDelete(position);
                 return true;
             }
         });
@@ -132,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 //                Toast.makeText(MainActivity.this, id+"", Toast.LENGTH_SHORT).show();
 
-                Log.e(TAG,id+"");
-                Long idx = (long) id;
-                MainActivity.sqLiteHelper.deletePlanner(idx);
+                int pos = (int) id;
+                SQLiteHelper dbx = new SQLiteHelper(getApplicationContext());
+                dbx.deletePlanner((long)planners.get(pos));
                 adapter.notifyDataSetChanged();
                 recreate();
                 Toast.makeText(getApplicationContext(),"Deleted Successfully",Toast.LENGTH_SHORT).show();

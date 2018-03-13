@@ -116,7 +116,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     }
     public final void deletePlanner(Long plantid){
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "DELETE FROM planner WHERE plant_id=?";
+        String sql = "DELETE FROM planner WHERE _id=?";
         SQLiteStatement statement = db.compileStatement(sql);
         statement.clearBindings();
         statement.bindLong(1, plantid);
