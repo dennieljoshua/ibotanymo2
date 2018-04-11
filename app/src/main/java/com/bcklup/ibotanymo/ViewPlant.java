@@ -97,16 +97,8 @@ public class ViewPlant extends AppCompatActivity {
         }
         d = Drawable.createFromStream(ims, null);
         plantImage.setImageDrawable(d);
-        switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
-            case 1: growthMap.setImageResource(R.drawable.shrubgrowthmap);
-                break;
-            case 2: growthMap.setImageResource(R.drawable.vinegrowthmap);
-                break;
-            case 3: growthMap.setImageResource(R.drawable.vinegrowthmap);
-                break;
-            case 4: growthMap.setImageResource(R.drawable.treegrowthmap);
-                break;
-        }
+
+
         switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
             case 1: plantKind.setText("Shrub");
                 break;
@@ -135,7 +127,42 @@ public class ViewPlant extends AppCompatActivity {
         }
         plantTips.setText(solutionString);
 
+        int stage=0;
+        switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
+            case 1:
+                if(plantDaysAge > 0 && plantDaysAge < 30 ) stage = 1;
+                else if(plantDaysAge > 29 && plantDaysAge < 100 ) stage = 2;
+                else if(plantDaysAge > 99) stage = 3;
+                break;
+            case 2:
+                if(plantDaysAge > 0 && plantDaysAge < 30 ) stage = 1;
+                else if(plantDaysAge > 29 && plantDaysAge < 70 ) stage = 2;
+                else if(plantDaysAge > 69 && plantDaysAge < 200) stage = 3;
+                else if(plantDaysAge > 199) stage = 4;
+                break;
+            case 3:
+                if(plantDaysAge > 0 && plantDaysAge < 30 ) stage = 1;
+                else if(plantDaysAge > 29 && plantDaysAge < 70 ) stage = 2;
+                else if(plantDaysAge > 69 && plantDaysAge < 200) stage = 3;
+                else if(plantDaysAge > 199) stage = 4;
+                break;
+            case 4:
+                if(plantDaysAge > 0 && plantDaysAge < 50 ) stage = 1;
+                else if(plantDaysAge > 49 && plantDaysAge < 100 ) stage = 2;
+                else if(plantDaysAge > 99 && plantDaysAge < 300) stage = 3;
+                else if(plantDaysAge > 299 && plantDaysAge < 400) stage = 4;
+                else if(plantDaysAge > 399) stage = 5;
+                break;
+        }
 
+        InputStream instream = null;
+        try {
+            instream = getAssets().open("growthprogress/"+intent.getExtras().getInt(MainActivity.PLANT_KIND)+""+stage+".png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Drawable progress = Drawable.createFromStream(instream, null);
+        growthMap.setImageDrawable(progress);
     }
     public void showImageFull(View view){
 

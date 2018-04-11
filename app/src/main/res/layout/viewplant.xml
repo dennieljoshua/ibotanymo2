@@ -8,7 +8,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="350dp">
 
         <TextView
             android:id="@+id/plantName"
@@ -139,7 +140,7 @@
 
         <TextView
             android:id="@+id/plantGuide"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
@@ -167,8 +168,8 @@
 
         <ImageView
             android:id="@+id/growthMap"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp "
+            android:layout_height="150dp"
             android:layout_marginStart="16dp"
             android:adjustViewBounds="false"
             android:paddingBottom="16dp"
@@ -182,10 +183,12 @@
             android:id="@+id/growthTips"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
             android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/growthMap"
             app:layout_constraintTop_toBottomOf="@+id/growthMapLabel" />

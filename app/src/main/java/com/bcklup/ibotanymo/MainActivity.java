@@ -48,19 +48,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String PLANT_DATE="com.bcklup.ibotanymo.PLANT_DATE";
 
 
-
-    class Planner{
-        int id;
-        int soil;
-        String date;
-
-        Planner(int id, String date) {
-            this.id = id;
-            this.date = date;
-        }
-    }
-
-
     public static SQLiteHelper sqLiteHelper;
 
     @Override
@@ -85,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         list = new ArrayList<>();
         planners = new ArrayList<>();
-        adapter = new PlannerListAdapter(this, R.layout.planner_items,list);
+        adapter = new PlannerListAdapter(this, R.layout.planner_items,list, planners);
         gridView.setAdapter(adapter);
 
         Cursor cursor = sqLiteHelper.getData("SELECT b._id, b.datestarted, a.* FROM plants as A JOIN planner as B ON a._id=b.plant_id WHERE 1");
