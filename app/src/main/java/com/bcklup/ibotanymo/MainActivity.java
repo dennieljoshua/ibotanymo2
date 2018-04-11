@@ -24,14 +24,17 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     //INITIATE
     GridView gridView;
     ArrayList<Plant> list;
-    ArrayList<Integer> planners;
+    ArrayList<Planner> planners;
     PlannerListAdapter adapter = null;
 
     private static final String TAG = "MyActivity";
@@ -42,6 +45,20 @@ public class MainActivity extends AppCompatActivity {
     public static final String PLANT_STORETYPE="com.bcklup.ibotanymo.PLANT_STORETYPE";
     public static final String PLANT_GUIDE="com.bcklup.ibotanymo.PLANT_GUIDE";
     public static final String PLANT_KIND="com.bcklup.ibotanymo.PLANT_KIND";
+    public static final String PLANT_DATE="com.bcklup.ibotanymo.PLANT_DATE";
+
+
+
+    class Planner{
+        int id;
+        int soil;
+        String date;
+
+        Planner(int id, String date) {
+            this.id = id;
+            this.date = date;
+        }
+    }
 
 
     public static SQLiteHelper sqLiteHelper;
@@ -71,18 +88,21 @@ public class MainActivity extends AppCompatActivity {
         adapter = new PlannerListAdapter(this, R.layout.planner_items,list);
         gridView.setAdapter(adapter);
 
-        Cursor cursor = sqLiteHelper.getData("SELECT b._id, a.* FROM plants as A JOIN planner as B ON a._id=b.plant_id WHERE 1");
+        Cursor cursor = sqLiteHelper.getData("SELECT b._id, b.datestarted, a.* FROM plants as A JOIN planner as B ON a._id=b.plant_id WHERE 1");
         list.clear();
         planners.clear();
         while(cursor.moveToNext()){
+
             int planner_id = cursor.getInt(0);
-            int id = cursor.getInt(1);
-            String name = cursor.getString(2);
-            int type = cursor.getInt(3);
-            int storeType = cursor.getInt(4);
-            String guide = cursor.getString(5);
-            int kind = cursor.getInt(6);
-            planners.add(planner_id);
+            String date = cursor.getString(1);
+            int id = cursor.getInt(2);
+            String name = cursor.getString(3);
+            int type = cursor.getInt(4);
+            int storeType = cursor.getInt(5);
+            String guide = cursor.getString(6);
+            int kind = cursor.getInt(7);
+
+            planners.add(new Planner(planner_id, date));
             list.add(new Plant(id, name, type, storeType, guide,kind));
 
         }
@@ -104,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(PLANT_STORETYPE,list.get(position).getStoreType());
                 intent.putExtra(PLANT_GUIDE,list.get(position).getGuide());
                 intent.putExtra(PLANT_KIND,list.get(position).getKind());
-
+                intent.putExtra(PLANT_GUIDE,list.get(position).getGuide());
+                intent.putExtra(PLANT_KIND,list.get(position).getKind());
+                intent.putExtra(PLANT_DATE,planners.get(position).date);
                 startActivity(intent);
 
             }
@@ -140,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int pos = (int) id;
                 SQLiteHelper dbx = new SQLiteHelper(getApplicationContext());
-                dbx.deletePlanner((long)planners.get(pos));
+                dbx.deletePlanner((long)planners.get(pos).id);
                 adapter.notifyDataSetChanged();
                 recreate();
                 Toast.makeText(getApplicationContext(),"Deleted Successfully",Toast.LENGTH_SHORT).show();
@@ -158,4 +180,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddPlant.class);
         startActivity(intent);
     }
+    Date parseDateString(String dateString){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date response = new Date();
+        try {
+            response =  dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
+    }
+
 }

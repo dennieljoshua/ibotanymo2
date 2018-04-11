@@ -67,14 +67,34 @@ public class AddProblem extends AppCompatActivity implements AdapterView.OnItemS
 
         txtProblem.requestFocus();
     }
-
+    public void addNewSolution(View view){
+        txtSolution.setVisibility(View.VISIBLE);
+    }
     public void saveProblem(View view){
-        if(txtSolution.getText().toString().isEmpty()) {
-            if (selectedSol != 1337) {
+        if(!txtProblem.getText().toString().isEmpty()){
+            if(txtSolution.getText().toString().isEmpty()) {
+                if (selectedSol != 1337) {
+                    try {
+                        dbHelp.insertProblemExisting(
+                                txtProblem.getText().toString().trim(),
+                                selectedSol
+                        );
+                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Added Successfully!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(this, "Choose solution first!", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
                 try {
-                    dbHelp.insertProblemExisting(
+                    dbHelp.insertProblem(
                             txtProblem.getText().toString().trim(),
-                            selectedSol
+                            txtSolution.getText().toString().trim()
                     );
                     Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                     startActivity(intent);
@@ -83,23 +103,9 @@ public class AddProblem extends AppCompatActivity implements AdapterView.OnItemS
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else {
-                Toast.makeText(this, "Choose solution first!", Toast.LENGTH_SHORT).show();
             }
-        }
-        else{
-            try {
-                dbHelp.insertProblem(
-                        txtProblem.getText().toString().trim(),
-                        txtSolution.getText().toString().trim()
-                );
-                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(getApplicationContext(), "Added Successfully!", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } else {
+            Toast.makeText(this, "Add Problem Text first!", Toast.LENGTH_SHORT).show();
         }
     }
 

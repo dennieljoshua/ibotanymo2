@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -21,14 +23,22 @@ import android.widget.ZoomControls;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class ViewPlant extends AppCompatActivity {
     String plantnamey = "";
-    Bitmap mybmp;
+    Drawable d;
+    long plantDaysAge;
 
-
+    SQLiteHelper dbhelper;
+    String solutionString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,24 @@ public class ViewPlant extends AppCompatActivity {
         ImageView plantImage= findViewById(R.id.plantImage);
         ImageView growthMap = findViewById(R.id.growthMap);
         TextView plantKind = findViewById(R.id.plantKind);
+        TextView plantAge = findViewById(R.id.plantAge);
+        TextView plantDate = findViewById(R.id.plantDate);
+        TextView plantTips = findViewById(R.id.growthTips);
+
+
+
+        dbhelper = new SQLiteHelper(this);
+
+        try {
+            dbhelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+        try {
+            dbhelper.openDataBase();
+        }catch(SQLException sqle){
+            throw sqle;
+        }
 
         plantName.setText(intent.getExtras().getString(MainActivity.PLANT_NAME));
         plantnamey = intent.getExtras().getString(MainActivity.PLANT_NAME);
@@ -67,7 +95,7 @@ public class ViewPlant extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Drawable d = Drawable.createFromStream(ims, null);
+        d = Drawable.createFromStream(ims, null);
         plantImage.setImageDrawable(d);
         switch(intent.getExtras().getInt(MainActivity.PLANT_KIND)){
             case 1: growthMap.setImageResource(R.drawable.shrubgrowthmap);
@@ -89,8 +117,28 @@ public class ViewPlant extends AppCompatActivity {
             case 4: plantKind.setText("Tree");
                 break;
         }
+        Date plantedDate = parseDateString(intent.getExtras().getString(MainActivity.PLANT_DATE));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(plantedDate);
+        SimpleDateFormat formatter=new SimpleDateFormat("dd-MMM-yyyy");
+        String plantedDateString = formatter.format(calendar.getTime());
+
+        long diff = Calendar.getInstance().getTimeInMillis() - calendar.getTimeInMillis();
+        plantDaysAge = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        plantDate.setText(plantedDateString);
+        if(plantDaysAge == 1)         plantAge.setText(plantDaysAge+" day");
+        else plantAge.setText(plantDaysAge+" days");
+        solutionString="";
+        Cursor cursor = dbhelper.getData("SELECT tip FROM tips WHERE kind = "+intent.getExtras().getInt(MainActivity.PLANT_KIND)+" AND min < "+plantDaysAge+" AND max > "+plantDaysAge);
+        while(cursor.moveToNext()){
+            solutionString += "• "+cursor.getString(0)+"\n";
+        }
+        plantTips.setText(solutionString);
+
+
     }
     public void showImageFull(View view){
+
         showImageFullDialog(ViewPlant.this);
     }
     public void showImageFullDialog(Activity activity){
@@ -100,7 +148,7 @@ public class ViewPlant extends AppCompatActivity {
 
         ImageView img = (ImageView) dialog.findViewById(R.id.fullImageView);
 //        final ZoomControls zc = (ZoomControls) dialog.findViewById(R.id.zoom_controls);
-        img.setImageBitmap(mybmp);
+        img.setImageDrawable(d);
 
 //        zc.setOnZoomInClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
@@ -142,5 +190,16 @@ public class ViewPlant extends AppCompatActivity {
         dialog.getWindow().setLayout(width, height);
         dialog.show();
 
+    }
+    Date parseDateString(String dateString){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date response = new Date();
+        try {
+            response =  dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 }

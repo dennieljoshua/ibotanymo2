@@ -1,17 +1,20 @@
 package com.bcklup.ibotanymo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +32,10 @@ public class PlantList extends AppCompatActivity{
     public static SQLiteHelper sqLiteHelper;
     String filter ="1";
     String filter2 = " AND 1";
+    String filter3 = " AND 1";
+    int humlevel=0;
+    int soillevel=0;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,7 @@ public class PlantList extends AppCompatActivity{
         listView.setAdapter(adapter);
 
 
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM plants WHERE "+filter+filter2);
+        Cursor cursor = sqLiteHelper.getData("SELECT * FROM plants WHERE "+filter+filter2+filter3);
         list.clear();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
@@ -76,11 +83,44 @@ public class PlantList extends AppCompatActivity{
             }
         });
 
+        final CharSequence[] humiditySelect = {"Watery", "Dry", "Less Water", "Warm & Airy"};
+        final CharSequence[] soilSelect = {"Clay", "Loamy", "Sandy", "Silty", "Chalky"};
 
+        //Prepare the list dialog box
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Set its title
+        builder.setTitle("Select Humidity of Environment");
+        //Set the list items and assign with the click listener
+        builder.setItems(humiditySelect, new DialogInterface.OnClickListener() {
+            // Click listener
+            public void onClick(DialogInterface dialog, int item) {
+                humlevel = item;
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        //Set its title
+        builder2.setTitle("Select Soil Type");
+        //Set the list items and assign with the click listener
+        builder2.setItems(soilSelect, new DialogInterface.OnClickListener() {
+            // Click listener
+            public void onClick(DialogInterface dialog, int item) {
+                soillevel = item;
+                populateListView();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert2 = builder2.create();
+
+        //display dialog box
+        alert2.show();
+        alert.show();
     }
 
     private void populateListView(){
-
+        filter3=" AND humidity = "+humlevel+" AND soil = "+soillevel;
         final SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
         try {
             sqLiteHelper.createDataBase();
@@ -98,7 +138,7 @@ public class PlantList extends AppCompatActivity{
         listView.setAdapter(adapter);
 
 
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM plants WHERE "+filter+filter2);
+        Cursor cursor = sqLiteHelper.getData("SELECT * FROM plants WHERE "+filter+filter2+filter3);
         list.clear();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);

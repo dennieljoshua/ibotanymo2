@@ -58,12 +58,11 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     }
     public void insertPlanner(Long plantid){
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO planner VALUES (NULL, ?)";
+        String sql = "INSERT INTO planner VALUES (NULL, ?, datetime())";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
 
         statement.bindLong(1, plantid);
-
         statement.executeInsert();
     }
 
