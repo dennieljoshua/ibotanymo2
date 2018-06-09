@@ -7,22 +7,31 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.BundleCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bcklup.ibotanymo.problems.EditProblemAndSolution;
+import com.bcklup.ibotanymo.problems.Problem;
+import com.bcklup.ibotanymo.problems.ProblemListAdapter;
+import com.bcklup.ibotanymo.problems.ProblemsAdapter;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -32,24 +41,14 @@ import java.util.HashMap;
 public class ProblemSolver extends AppCompatActivity {
 
 
-    public class Problem implements Serializable{
-        public int id;
-        public String problem;
-        public ArrayList<Integer> solution;
-        public Problem(int id, String problem, ArrayList<Integer> solution){
-            this.id = id;
-            this.problem = problem;
-            this.solution = solution;
-        }
-    }
     SQLiteHelper dbhelper;
 
     String solutionString = "";
     String filterText="1";
-    LinearLayout listCheckBox;
+//    LinearLayout listCheckBox;
     CheckBox checkbox;
 
-    ArrayList<Problem> list;
+    ArrayList<Problem> problems;
     HashMap<Integer, Boolean> sols;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +58,37 @@ public class ProblemSolver extends AppCompatActivity {
 
         try {
             dbhelper.createDataBase();
-        } catch (IOException ioe) {
+            dbhelper.openDataBase();
+        } catch (Exception ioe) {
             throw new Error("Unable to create database");
         }
-        try {
-            dbhelper.openDataBase();
-        }catch(SQLException sqle){
-            throw sqle;
-        }
-        list= new ArrayList<>();
+
+        problems= new ArrayList<>();
         sols= new HashMap<>();
-        listCheckBox = (LinearLayout) findViewById(R.id.listCheckbox);
+//        listCheckBox = (LinearLayout) findViewById(R.id.);
         initProbs();
 
         initSols();
         initChecklist();
+
+        FloatingActionButton fab = findViewById(R.id.fabProblems);
+
+        RecyclerView rvProblems = findViewById(R.id.rvProblems);
+
+        ProblemsAdapter adapter = new ProblemsAdapter(problems);
+        rvProblems.setAdapter(adapter);
+        rvProblems.setLayoutManager(new LinearLayoutManager(this));
+
+        rvProblems.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    fab.hide();
+                } else if (dy < 0) {
+                    fab.show();
+                }
+            }
+        });
     }
 
     @Override
@@ -118,12 +133,12 @@ public class ProblemSolver extends AppCompatActivity {
     void resetCheckbox(){
         initProbs();
         initSols();
-        listCheckBox.removeAllViews();
+//        listCheckBox.removeAllViews();
         initChecklist();
     }
     private void initProbs(){
         Cursor cursor = dbhelper.getData("SELECT * FROM problems WHERE "+filterText);
-        list.clear();
+        problems.clear();
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
             String problem = cursor.getString(1);
@@ -132,16 +147,16 @@ public class ProblemSolver extends AppCompatActivity {
             while(cursor2.moveToNext()){
                 sols.add(cursor2.getInt(0));
             }
-            list.add(new Problem(id,problem,sols));
+            problems.add(new Problem(id,problem,sols));
         }
     }
     private void initChecklist(){
-        for (Problem object: list) {
+        for (Problem object: problems) {
             checkbox = new CheckBox(this);
-            checkbox.setId(list.indexOf(object));
+            checkbox.setId(problems.indexOf(object));
             checkbox.setText(object.problem);
             checkbox.setOnClickListener(getOnClickDoSomething(checkbox));
-            listCheckBox.addView(checkbox);
+//            listCheckBox.addView(checkbox);
             
             Button btn = new Button(this);
             btn.setText("DELETE");
@@ -151,7 +166,7 @@ public class ProblemSolver extends AppCompatActivity {
                 resetCheckbox();
                 Toast.makeText(this, "Problem Deleted!", Toast.LENGTH_SHORT).show();
             });
-            listCheckBox.addView(btn);
+//            listCheckBox.addView(btn);
 
             Button editBtn = new Button(this);
             editBtn.setText("EDIT");
@@ -166,7 +181,7 @@ public class ProblemSolver extends AppCompatActivity {
                 t.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 t.add(android.R.id.content, newFragment).addToBackStack(null).commit();
             });
-            listCheckBox.addView(editBtn);
+//            listCheckBox.addView(editBtn);
         }
     }
 
@@ -174,7 +189,7 @@ public class ProblemSolver extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(Integer xad: list.get(button.getId()).solution){
+                for(Integer xad: problems.get(button.getId()).solution){
                     sols.put(xad,button.isChecked());
                 }
             }
