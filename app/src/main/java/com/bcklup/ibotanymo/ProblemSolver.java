@@ -1,3 +1,4 @@
+
 package com.bcklup.ibotanymo;
 
 import android.app.Activity;
@@ -7,17 +8,21 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SearchView;
+import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,8 +142,24 @@ public class ProblemSolver extends AppCompatActivity {
             checkbox.setText(object.problem);
             checkbox.setOnClickListener(getOnClickDoSomething(checkbox));
             listCheckBox.addView(checkbox);
+            
+            Button btn = new Button(this);
+            btn.setText("DELETE");
+            btn.setMaxWidth(250);
+            btn.setOnClickListener((View v) -> {
+                dbhelper.deleteProblemAndSolution((long) object.id);
+                resetCheckbox();
+                Toast.makeText(this, "Problem Deleted!", Toast.LENGTH_SHORT).show();
+            });
+            listCheckBox.addView(btn);
+
+            Button editBtn = new Button(this);
+            editBtn.setText("EDIT");
+            editBtn.setMaxWidth(250);
+            listCheckBox.addView(editBtn);
         }
     }
+
     View.OnClickListener getOnClickDoSomething(final CheckBox button){
         return new View.OnClickListener() {
             @Override

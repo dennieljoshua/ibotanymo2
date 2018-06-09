@@ -122,6 +122,15 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         statement.executeUpdateDelete();
     }
 
+    public final void deleteProblemAndSolution(Long problemId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "DELETE FROM problems WHERE _id =?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindLong(1, problemId);
+        statement.executeUpdateDelete();
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
