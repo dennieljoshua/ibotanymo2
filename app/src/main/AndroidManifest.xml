@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.bcklup.ibotanymo">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -42,6 +44,11 @@
                 android:value="com.bcklup.ibotanymo.HomeScreen" />
         </activity>
         <activity android:name=".AddProblem"></activity>
+
+        <meta-data android:name="DATABASE" android:value="ibotany_sugar.db" />
+        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.dj" />
     </application>
 
 </manifest>

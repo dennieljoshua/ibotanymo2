@@ -6,33 +6,33 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.app.BundleCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.SearchView;
-import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bcklup.ibotanymo.problems.EditProblemAndSolution;
+
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProblemSolver extends AppCompatActivity {
 
 
-    class Problem{
+    public class Problem implements Serializable{
         public int id;
         public String problem;
         public ArrayList<Integer> solution;
@@ -156,6 +156,16 @@ public class ProblemSolver extends AppCompatActivity {
             Button editBtn = new Button(this);
             editBtn.setText("EDIT");
             editBtn.setMaxWidth(250);
+            editBtn.setOnClickListener((View v) -> {
+                FragmentManager manager = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("problem", object);
+                EditProblemAndSolution newFragment = new EditProblemAndSolution();
+                newFragment.setArguments(bundle);
+                FragmentTransaction t = manager.beginTransaction();
+                t.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                t.add(android.R.id.content, newFragment).addToBackStack(null).commit();
+            });
             listCheckBox.addView(editBtn);
         }
     }
