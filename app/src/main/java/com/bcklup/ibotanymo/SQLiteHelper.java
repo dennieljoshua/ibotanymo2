@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -128,6 +127,16 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         SQLiteStatement statement = db.compileStatement(sql);
         statement.clearBindings();
         statement.bindLong(1, problemId);
+        statement.executeUpdateDelete();
+    }
+
+    public final void unlinkSolutionToProblem(int problemId, int solutionId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "DELETE FROM problems_solutions WHERE problem_id = ? AND solution_id = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindLong(1, problemId);
+        statement.bindLong(2, solutionId);
         statement.executeUpdateDelete();
     }
 

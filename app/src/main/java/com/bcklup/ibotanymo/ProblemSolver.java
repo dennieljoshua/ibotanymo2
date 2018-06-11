@@ -3,14 +3,14 @@ package com.bcklup.ibotanymo;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.BundleCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,23 +18,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bcklup.ibotanymo.problems.EditProblemAndSolution;
 import com.bcklup.ibotanymo.problems.Problem;
-import com.bcklup.ibotanymo.problems.ProblemListAdapter;
 import com.bcklup.ibotanymo.problems.ProblemsAdapter;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,15 +36,17 @@ public class ProblemSolver extends AppCompatActivity {
 
     String solutionString = "";
     String filterText="1";
-//    LinearLayout listCheckBox;
     CheckBox checkbox;
 
     ArrayList<Problem> problems;
     HashMap<Integer, Boolean> sols;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_solver);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dbhelper = new SQLiteHelper(this);
 
         try {
@@ -65,7 +58,6 @@ public class ProblemSolver extends AppCompatActivity {
 
         problems= new ArrayList<>();
         sols= new HashMap<>();
-//        listCheckBox = (LinearLayout) findViewById(R.id.);
         initProbs();
 
         initSols();
@@ -156,32 +148,6 @@ public class ProblemSolver extends AppCompatActivity {
             checkbox.setId(problems.indexOf(object));
             checkbox.setText(object.problem);
             checkbox.setOnClickListener(getOnClickDoSomething(checkbox));
-//            listCheckBox.addView(checkbox);
-            
-            Button btn = new Button(this);
-            btn.setText("DELETE");
-            btn.setMaxWidth(250);
-            btn.setOnClickListener((View v) -> {
-                dbhelper.deleteProblemAndSolution((long) object.id);
-                resetCheckbox();
-                Toast.makeText(this, "Problem Deleted!", Toast.LENGTH_SHORT).show();
-            });
-//            listCheckBox.addView(btn);
-
-            Button editBtn = new Button(this);
-            editBtn.setText("EDIT");
-            editBtn.setMaxWidth(250);
-            editBtn.setOnClickListener((View v) -> {
-                FragmentManager manager = getSupportFragmentManager();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("problem", object);
-                EditProblemAndSolution newFragment = new EditProblemAndSolution();
-                newFragment.setArguments(bundle);
-                FragmentTransaction t = manager.beginTransaction();
-                t.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                t.add(android.R.id.content, newFragment).addToBackStack(null).commit();
-            });
-//            listCheckBox.addView(editBtn);
         }
     }
 
@@ -233,5 +199,37 @@ public class ProblemSolver extends AppCompatActivity {
     public void showAddProblem(View view){
         Intent intent = new Intent(this,AddProblem.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getFragmentManager().getBackStackEntryCount();
+        resetCheckbox();
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getFragmentManager().popBackStack();
+        }
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                if(NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder.create(this)
+                            .addNextIntentWithParentStack(upIntent)
+                            .startActivities();
+                } else {
+                    NavUtils.navigateUpTo(this, upIntent);
+                }
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
