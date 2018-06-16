@@ -31,7 +31,14 @@
         <activity
             android:name=".HomeScreen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProblemSolver" />
+        <activity
+            android:name=".ProblemSolver"
+            android:label="Search for Problems"
+            android:parentActivityName=".HomeScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bcklup.ibotanymo.HomeScreen" />
+        </activity>
         <activity
             android:name=".BotanyGuide"
             android:label="@string/title_activity_botany_guide"
@@ -41,7 +48,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bcklup.ibotanymo.HomeScreen" />
         </activity>
-        <activity android:name=".AddProblem"></activity>
+        <activity android:name=".AddProblem" />
+
+
+        <activity android:name=".EditProblem"
+            android:label="Edit Problem"
+            android:parentActivityName=".ProblemSolver">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bcklup.ibotanymo.ProblemSolver" />
+        </activity>
     </application>
 
 </manifest>
