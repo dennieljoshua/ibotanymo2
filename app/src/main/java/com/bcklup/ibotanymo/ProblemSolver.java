@@ -65,6 +65,10 @@ public class ProblemSolver extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fabProblems);
 
+        fab.setOnClickListener((View v) -> {
+            showAddProblem(v);
+        });
+
         RecyclerView rvProblems = findViewById(R.id.rvProblems);
 
         ProblemsAdapter adapter = new ProblemsAdapter(problems);

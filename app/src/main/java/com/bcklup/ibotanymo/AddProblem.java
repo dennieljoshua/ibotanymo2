@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,7 +48,9 @@ public class AddProblem extends AppCompatActivity implements AdapterView.OnItemS
         }catch(SQLException sqle){
             throw sqle;
         }
-//        spnAdapter = ArrayAdapter.
+
+
+
         Cursor cursor = dbHelp.getData("SELECT * FROM solutions");
         ArrayList<String> contents = new ArrayList<>();
         solids.clear();
@@ -55,8 +58,12 @@ public class AddProblem extends AppCompatActivity implements AdapterView.OnItemS
             contents.add(cursor.getString(1));
             solids.add(cursor.getInt(0));
         }
-        spnAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,contents);
+        spnAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,contents);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MultiAutoCompleteTextView mView = findViewById(R.id.solutionsAutocomplete);
+        mView.setAdapter(spnAdapter);
+        mView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        mView.showDropDown();
         spnSolution.setAdapter(spnAdapter);
         dbHelp= new SQLiteHelper(this);
         spnSolution.setOnItemSelectedListener(this);

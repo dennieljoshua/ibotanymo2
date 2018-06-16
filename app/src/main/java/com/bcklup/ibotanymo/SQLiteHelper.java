@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import com.bcklup.ibotanymo.problems.Problem;
+import com.bcklup.ibotanymo.solutions.Solution;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -215,6 +218,51 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         myOutput.close();
         myInput.close();
 
+    }
+
+    public void saveSolution(Solution solution) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE solutions SET solution = ? WHERE _id = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, solution.getSolution());
+        statement.bindLong(2, solution.getId());
+        statement.executeUpdateDelete();
+    }
+
+    public void saveProblem(Problem problem) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "UPDATE problems SET problem = ? WHERE _id  = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, problem.problem);
+        statement.bindLong(2, problem.id);
+        statement.executeUpdateDelete();
+    }
+
+    public void addSolutionToExistingProblem(Problem problem, Solution solution) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "INSERT INTO problems_solutions VALUES (NULL, ?, ?)";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.bindLong(1, problem.id);
+        statement.bindLong(2, solution.getId());
+        statement.executeInsert();
+    }
+
+    public void addNewSolutionToProblem(Problem problem, Solution solution) {
+        SQLiteDatabase db = getWritableDatabase();
+        String insertSolutionSql = "INSERT INTO solutions VALUES (NULL, ?)";
+        SQLiteStatement statement = db.compileStatement(insertSolutionSql);
+        statement.bindString(1, solution.getSolution());
+
+        long solutionId = statement.executeInsert();
+
+        String relationSql = "INSERT INTO problems_solutions VALUES (NULL, ?, ?)";
+        SQLiteStatement relationalStatement = db.compileStatement(relationSql);
+        relationalStatement.bindLong(1, problem.id);
+        relationalStatement.bindLong(2, solutionId);
+
+        relationalStatement.executeInsert();
     }
 
     public void openDataBase() throws SQLException {
