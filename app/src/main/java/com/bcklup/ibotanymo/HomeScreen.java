@@ -13,7 +13,8 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
     }
     public void showPlanner(View view){
-        Intent intent = new Intent(this, MainActivity.class);
+//        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, GardenPlanner.class);
         startActivity(intent);
     }
     public void showSolver(View view){

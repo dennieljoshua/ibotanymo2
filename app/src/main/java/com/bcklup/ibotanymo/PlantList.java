@@ -45,11 +45,13 @@ public class PlantList extends AppCompatActivity{
         } catch (IOException ioe) {
             throw new Error("Unable to create database");
         }
+
         try {
             sqLiteHelper.openDataBase();
         }catch(SQLException sqle){
             throw sqle;
         }
+
         listView = (ListView) findViewById(R.id.plantListView);
         list = new ArrayList<>();
         adapter = new PlantListAdapter(this, R.layout.customlistview,list);
@@ -73,7 +75,7 @@ public class PlantList extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             sqLiteHelper.insertPlanner((long)list.get(position).getId());
-            Intent intent = new Intent(PlantList.this,HomeScreen.class);
+            Intent intent = new Intent(PlantList.this, GardenPlanner.class);
             startActivity(intent);
             finish();
             }

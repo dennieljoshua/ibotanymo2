@@ -49,15 +49,22 @@
                 android:value="com.bcklup.ibotanymo.HomeScreen" />
         </activity>
         <activity android:name=".AddProblem" />
-
-
-        <activity android:name=".EditProblem"
+        <activity
+            android:name=".EditProblem"
             android:label="Edit Problem"
             android:parentActivityName=".ProblemSolver">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bcklup.ibotanymo.ProblemSolver" />
         </activity>
+
+        <service
+            android:name=".services.PlannerService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".GardenPlanner"
+            android:label="Manage Garden"></activity>
     </application>
 
 </manifest>
